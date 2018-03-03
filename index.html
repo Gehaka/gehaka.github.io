@@ -1,8 +1,27 @@
 <!DOCTYPE html>
 <html>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<head>
 		<title>[non-racist-app-name]</title>
+		<meta charset="utf-8" />
+
+		<video autoplay></video>
+		<script>
+		  var onFailSoHard = function(e) {
+		    console.log('Reeeejected!', e);
+		  };
+
+		  // Not showing vendor prefixes.
+		  navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
+		    var video = document.querySelector('video');
+		    video.src = window.URL.createObjectURL(localMediaStream);
+
+		    // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+		    // See crbug.com/110938.
+		    video.onloadedmetadata = function(e) {
+		      // Ready to go. Do some stuff.
+		    };
+		  }, onFailSoHard);
+		</script>
 	</head>
 
 	<body>
@@ -19,7 +38,7 @@
 					<img id="img" height="500"/>
 				</p>
 				<p>
-					<progress id="progress" value="0" min="0" max="100" style="width:300px;"/>
+					<progress id="progress" value="0" min="0" max="100" style="width:300px;" hidden="true"/>
 				</p>
 
 			</form>
