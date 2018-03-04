@@ -1,43 +1,30 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>[non-racist-app-name]</title>
+		<title>Optecode</title>
 		<meta charset="utf-8" />
-
-		<!-- <video autoplay></video>
-		<script>
-		  var onFailSoHard = function(e) {
-		    console.log('Reeeejected!', e);
-		  };
-
-		  // Not showing vendor prefixes.
-		  navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
-		    var video = document.querySelector('video');
-		    video.src = window.URL.createObjectURL(localMediaStream);
-
-		    // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
-		    // See crbug.com/110938.
-		    video.onloadedmetadata = function(e) {
-		      // Ready to go. Do some stuff.
-		    };
-		  }, onFailSoHard);
-		</script> -->
 	</head>
 
 	<body>
 		<div align="center">
-			<h1>WHITE CODE</h1>
+			<p>
+				<h1>OPTECODE</h1>
+			</p>
 
 			<form id="form" enctype="multipart/form-data" method="post">
 
 				<p>
-					<input type="file" id="file" name="file"/>
-					<input type="button" id="submit" value="Submit" disabled="true"/>
+					<input type="file" id="file" name="file" accept="image/*"/>
+					<input type="button" id="openCamera" value="Open Camera" name="openCamera"/>
 				</p>
 				<p>
-					<img id="img" height="500"/>
+					<img id="img" height="480" hidden="true"/>
+					<video id="video" width="640" height="480" autoplay hidden="true"></video>
+					<canvas id="canvas" hidden="true"></canvas>
 				</p>
 				<p>
+					<input type="button" id="submit" value="Send Image" disabled="true"/>
+					<br /><br />
 					<progress id="progress" value="0" min="0" max="100" style="width:300px;" hidden="true"/>
 				</p>
 
