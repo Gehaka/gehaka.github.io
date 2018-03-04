@@ -78,7 +78,7 @@
 								<footer>
 									<ul class="icons">
 										<li><a onclick="document.getElementById('file').click(); return false;" class="fa-folder-open">Browse</a></li>
-										<li><a onclick="document.getElementById('openCamera').click(); return false;" class="fa-camera">Open Camera</a></li>
+										<li><a id="cameraIcon" onclick="document.getElementById('openCamera').click(); return false;" class="fa-camera">Open Camera</a></li>
 										<!-- <li><a href="#" class="fa-facebook">Facebook</a></li> -->
 									</ul>
 
@@ -92,11 +92,8 @@
 										<video id="video" width="640" height="480" autoplay hidden="true"></video>
 										<canvas id="canvas" hidden="true"></canvas>
 									</p>
-									<p>
-										<input type="button" id="submit" value="Process Image" disabled="true"/>
-										<br /><br />
-										<progress id="progress" value="0" min="0" max="100" style="width:300px;" hidden="true"/>
-									</p>
+									<p><input type="button" id="submit" value="Process Image" disabled="true"/></p>
+									<p><progress id="progress" value="0" min="0" max="100" style="width:300px; height:30px" hidden="true" /></p>
 									<div id="code" class="snippetTitle" hidden="true">
 										Code:
 									</div>
@@ -105,8 +102,7 @@
 										Result:
 									</div>
 									<p id="resultText" class="snippet" hidden="true" min-height="20px"></p>
-									<br />
-									<p><input type="button" id="update" value="Update Code" hidden="true"/></p>
+									<p><input type="button" id="update" value="Update Code" hidden="true" /></p>
 									<br />
 								</footer>
 							</section>
@@ -151,6 +147,11 @@
 				if ('addEventListener' in window) {
 					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
 					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+				}
+
+				if ((/mobile/i.test(navigator.userAgent))) {
+					var cameraIcon = document.getElementById('cameraIcon');
+					cameraIcon.parentElement.removeChild(cameraIcon);
 				}
 			</script>
 

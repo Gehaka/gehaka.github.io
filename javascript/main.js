@@ -34,7 +34,7 @@ $(function (){
 		toggleCodeText(true);
 		$codeText[0].value = (data["code"].trim());
 		$codeText.height(0);
-		$codeText.height($codeText[0].scrollHeight - 35);
+		$codeText.height($codeText[0].scrollHeight - 40);
 		$resultText.html(data["res"].trim());
 	}
 
@@ -59,7 +59,7 @@ $(function (){
 
 	$codeText.on("input", function() {
 		$codeText.height(0);
-		$codeText.height($codeText[0].scrollHeight - 35);
+		$codeText.height($codeText[0].scrollHeight - 40);
 	});
 
 	$file.on("change", function() {
