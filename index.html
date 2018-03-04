@@ -36,7 +36,7 @@
 									<span class="avatar"><img src="images/aperture2.png" alt="" /></span>
 
 									<h1>Optecode</h1>
-									<p>Visual Code Compiler</p>
+									<p>What You See Is What You Build</p>
 								</header>
 									<!--
 									<hr />
@@ -88,8 +88,8 @@
 										<p><input type="button" id="openCamera" value="Open Camera" name="openCamera" style="display:none"/></p>
 									</form>
 									<p>
-										<img id="img" height="480" hidden="false"/>
-										<video id="video" width="640" height="480" autoplay hidden="false"></video>
+										<img id="img" width="480" hidden="true"/>
+										<video id="video" width="640" height="480" autoplay hidden="true"></video>
 										<canvas id="canvas" hidden="true"></canvas>
 									</p>
 									<p>
@@ -100,11 +100,13 @@
 									<div id="code" class="snippetTitle" hidden="true">
 										Code:
 									</div>
-									<p id="codeText" class="snippet" hidden="true"></p>
+									<textarea id="codeText" class="snippet" hidden="true" autofocus="false"></textarea>
 									<div id="result" class="snippetTitle" hidden="true">
 										Result:
 									</div>
-									<p id="resultText" class="snippet" hidden="true"></p>
+									<p id="resultText" class="snippet" hidden="true" min-height="20px"></p>
+									<br />
+									<p><input type="button" id="update" value="Update Code" hidden="true"/></p>
 									<br />
 								</footer>
 							</section>

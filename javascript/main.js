@@ -6,7 +6,37 @@ $(function (){
 	var $progress = $("#progress");
 	var $video = $("#video");
 	var $canvas = $("#canvas");
+	var $update = $("#update");
+	var $codeText = $("#codeText");
+	var $resultText = $("#resultText");
 	var $localstream;
+
+	function stopCamera() {
+		if ($video[0].src != ""){
+			$video[0].pause();
+			if ($localstream) $localstream.getTracks()[0].stop();
+			$video[0].hidden = true;
+		}
+	}
+
+	function toggleCodeText(show) {
+		$("#code")[0].hidden = !show;
+		$("#result")[0].hidden = !show;
+		$codeText[0].hidden = !show;
+		$resultText[0].hidden = !show;
+		$update[0].hidden = !show;
+	}
+
+	function onRequestSuccess(data) {
+		$progress[0].hidden = true;
+		console.log("Code: \n" + data["code"]);
+		console.log("Output: \n" + data["res"]);
+		toggleCodeText(true);
+		$codeText[0].value = (data["code"].trim());
+		$codeText.height(0);
+		$codeText.height($codeText[0].scrollHeight - 35);
+		$resultText.html(data["res"].trim());
+	}
 
 	$("#openCamera").on("click", function() {
 		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
@@ -20,24 +50,27 @@ $(function (){
 				$canvas[0].height = $video[0].height;
 				$canvas[0].hidden = true;
 				$submit[0].disabled = false;
+				toggleCodeText(false);
 			}, function(e) {
 			  console.log('Reeeejected!', e);
 			});
 		}
 	});
 
+	$codeText.on("input", function() {
+		$codeText.height(0);
+		$codeText.height($codeText[0].scrollHeight - 35);
+	});
+
 	$file.on("change", function() {
 		var file = $file[0].files[0];
 		if (file.type.search("image") >= 0){
-			if ($video[0].src != ""){
-				$video[0].pause();
-				if ($localstream) $localstream.getTracks()[0].stop();
-				$video[0].hidden = true;
-			}
+			stopCamera();
 			$canvas[0].hidden = true;
 			$img[0].hidden = false;
 			$img[0].src = URL.createObjectURL(file);
 			$submit[0].disabled = false;
+			toggleCodeText(false);
 			console.log(file.name + " | " + file.size + " | " + file.type);
 		} else {
 			$submit[0].disabled = true;
@@ -45,7 +78,7 @@ $(function (){
 		}
 	});
 
-	function sendImage(imageData){
+	function sendImage(imageData) {
 		$.ajax({
 			url: "http://18.219.109.35/upload",
 			type: "POST",
@@ -56,16 +89,8 @@ $(function (){
 			contentType: false,
 			processData: false,
 
-			success: function(data){
-				$progress[0].hidden = true;
-				console.log("Code: \n" + data["code"]);
-				console.log("Output: \n" + data["res"]);
-				$("#code")[0].hidden = false;
-				$("#result")[0].hidden = false;
-				$("#codeText")[0].hidden = false;
-				$("#resultText")[0].hidden = false;
-				$("#codeText").html(data["code"]);
-				$("#resultText").html(data["res"]);
+			success: function(data) {
+				onRequestSuccess(data);
 			},
 
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -134,10 +159,32 @@ $(function (){
 			$canvas[0].getContext("2d").drawImage($video[0], 0, 0);
 			blob = dataURItoBlob($canvas[0].toDataURL("image/png"));
 			data.append("file", blob);
-			$video[0].hidden = true;
 			console.log(blob);
+			stopCamera();
 			sendImage(data);
 		}
+	});
+
+	$update.on("click", function() {
+		$.ajax({
+			url: "http://18.219.109.35/edit",
+			type: "POST",
+
+			data: $codeText[0].value,
+
+			cache: false,
+			contentType: false,
+			processData: false,
+
+			success: function(data) {
+				onRequestSuccess(data);
+			},
+
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$progress[0].hidden = true;
+				alert("Status: " + textStatus + "\nError: " + errorThrown);
+			}
+		});
 	});
 
 });
