@@ -60,7 +60,12 @@ $(function (){
 				$progress[0].hidden = true;
 				console.log("Code: \n" + data["code"]);
 				console.log("Output: \n" + data["res"]);
-				alert("Code: \n" + data["code"] + "\nOutput: \n" + data["res"]);
+				$("#code")[0].hidden = false;
+				$("#result")[0].hidden = false;
+				$("#codeText")[0].hidden = false;
+				$("#resultText")[0].hidden = false;
+				$("#codeText").html(data["code"]);
+				$("#resultText").html(data["res"]);
 			},
 
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -123,7 +128,7 @@ $(function (){
 			else {
 				alert("File is not an image");
 			}
-		} else if (!$video[0].hidden) {
+		} else if (!$video[0].hidden || !$canvas[0].hidden) {
 			$progress[0].hidden = false;
 			$canvas[0].hidden = false;
 			$canvas[0].getContext("2d").drawImage($video[0], 0, 0);
