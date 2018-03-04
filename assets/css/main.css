@@ -50,6 +50,11 @@
 		vertical-align: middle;
 	}
 
+	img {
+		align-self: center;
+		max-width: 70vw;
+	}
+
 	body {
 		-webkit-text-size-adjust: none;
 	}
@@ -197,6 +202,7 @@
 		font-family: monospace;
 		max-width: inherit;
 		min-height: 0px;
+		max-width: 90vw;
 	}
 
 	.snippet {
@@ -815,6 +821,11 @@
 		cursor: default;
 		text-align: center;
 	}
+
+		#footer p {
+			text-align: center;
+			align-content: center;
+		}
 
 		#footer .copyright {
 			margin: 0;
